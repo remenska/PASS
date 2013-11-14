@@ -3,7 +3,7 @@ PASS
 
 ## Property ASSistant
 
-Developing correct concurrent software is challenging. Design errors
+Developing correct concurrent software is challenging. Design errors 
 can result in deadlocks, race conditions and livelocks, and discovering these is
 difficult. Approaches for automatically generating formal models from system
 designs have been proposed and successfully used in industry. A serious obstacle
@@ -20,4 +20,7 @@ making it a good match for sequence diagrams, where communication between
 components is depicted. 
 
 PASS is developed as an Eclipse plug-in, so you can easily install it by adding the .jar file to your ECLIPSE_HOME/plugins directory.
-![solarized palette](https://github.com/altercation/solarized/raw/master/img/solarized-palette.png)
+
+Launching it is easy:
+
+![launch PASS](https://raw.github.com/remenska/PASS/master/screenshots/PASSlaunch.png)
