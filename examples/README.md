@@ -4,7 +4,7 @@
         $ ./lps-reach --action=error --saturation=sat-like --save-sat-levels --mcrl2-readable-edge-labels --trace=witness.2.gcf --order=chain ExecutorsFrameworkNFM_bugFix_withMonitor.lps -rgs
 
     ...and here's the verdict:
-
+        [...]
         lps-reach: visited 0 has 2850325 (~2.85e+06) states ( 847127 nodes )
         lps-reach: Exploration took 163709 group checks and 163709 next state calls
         lps-reach: reachability took 6500.790 real 6496.390 user 1.450 sys

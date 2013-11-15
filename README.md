@@ -24,5 +24,9 @@ Screenshots
 
 Click to view.
 
-[![mutt dark](https://github.com/altercation/solarized/raw/master/img/screen-mutt-dark-th.png)](https://github.com/altercation/solarized/raw/master/img/screen-mutt-dark.png)
-[![mutt light](https://github.com/altercation/solarized/raw/master/img/screen-mutt-light-th.png)](https://github.com/altercation/solarized/raw/master/img/screen-mutt-light.png)
+[![mutt dark](https://raw.github.com/remenska/PASS/master/screenshots/thumbnails/Introduction.png)](https://raw.github.com/remenska/PASS/master/screenshots/Introduction.png)
+[![mutt dark](https://raw.github.com/remenska/PASS/master/screenshots/thumbnails/ScopeSelection.png/)](https://raw.github.com/remenska/PASS/master/screenshots/ScopeSelection.png)
+[![mutt dark](https://raw.github.com/remenska/PASS/master/screenshots/thumbnails/PasspopupWin.png)](https://raw.github.com/remenska/PASS/master/screenshots/PasspopupWin.png)
+[![mutt dark](https://raw.github.com/remenska/PASS/master/screenshots/thumbnails/GeneratedSequenceDiagram.png)](https://raw.github.com/remenska/PASS/master/screenshots/GeneratedSequenceDiagram.png)
+
+    See also the [mCRL2 site](http://www.mcrl2.org/release/user_manual/index.html) and the [LTSmin toolset one](http://fmt.cs.utwente.nl/tools/ltsmin/).
