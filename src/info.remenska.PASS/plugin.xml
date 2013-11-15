@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Resource Manager Category"
+            id="info.remenska.PASS">
+      </category>
+      <view
+            name="ResourceManager View"
+            icon="icons/check1.png"
+            category="info.remenska.PASS"
+            class="info.remenska.PASS.views.ResourceManagerView"
+            id="info.remenska.PASS.views.ResourceManagerView">
+      </view>
+      <view
+            category="info.remenska.PASS"
+            class="org.eclipse.ui.navigator.CommonNavigator"
+            id="info.remenska.PASS.view2"
+            name="CommonNavigatorDaniela"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="com.ibm.xtools.modeler.internal.ui.perspectives.ClassicModelingPerspective">
+         <view
+               id="info.remenska.PASS.views.ResourceManagerView"
+               minimized="false"
+               relationship="stack"
+               relative="org.eclipse.ui.views.TaskList"
+               visible="true">
+         </view>
+      </perspectiveExtension>
+      <perspectiveExtension
+            targetID="org.eclipse.ui.resourcePerspective">
+         <view
+               id="info.remenska.PASS.views.ResourceManagerView"
+               minimized="false"
+               relationship="stack"
+               relative="org.eclipse.ui.views.TaskList"
+               visible="true">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+   </extension>
+   <extension
+         point="org.eclipse.ui.viewActions">
+      <viewContribution
+            id="info.remenska.PASS.ResourceManagerViewContribution"
+            targetID="info.remenska.PASS.views.ResourceManagerView">
+         <action
+               class="info.remenska.PASS.ResourceManagerViewActionDelgate"
+               icon="icons/check1.png"
+               id="info.remenska.PASS.ResourceManagerViewAction"
+               label="launch PASS"
+               style="push"
+               toolbarPath="additions">
+         </action>
+      </viewContribution>
+      <viewContribution
+            id="info.remenska.PASS.DanielaContribution"
+            targetID="org.eclipse.ui.navigator.ProjectExplorer">
+         <action
+               class="info.remenska.PASS.ResourceManagerViewActionDelgate"
+               icon="icons/check1.png"
+               id="info.remenska.PASS.action1"
+               label="launch PASS!"
+               menubarPath="additions"
+               style="push"
+               toolbarPath="additions">
+         </action>
+      </viewContribution>
+   </extension>
+
+</plugin>
