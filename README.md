@@ -18,3 +18,11 @@ PASS is developed as an Eclipse plug-in, so you can easily install it by adding 
 Launching PASS is easy:
 
 ![launch PASS](https://raw.github.com/remenska/PASS/master/screenshots/PASSlaunch.png)
+
+Screenshots
+-----------
+
+Click to view.
+
+[![mutt dark](https://github.com/altercation/solarized/raw/master/img/screen-mutt-dark-th.png)](https://github.com/altercation/solarized/raw/master/img/screen-mutt-dark.png)
+[![mutt light](https://github.com/altercation/solarized/raw/master/img/screen-mutt-light-th.png)](https://github.com/altercation/solarized/raw/master/img/screen-mutt-light.png)
