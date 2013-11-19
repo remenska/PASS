@@ -92,7 +92,7 @@ public class CapturePropertyWizard extends Wizard {
 											
 										} catch (FileNotFoundException
 												| UnsupportedEncodingException e1) {
-											System.err.println("The directory you provided for saving the formula is not accessible. Printing the full stack:");
+											System.err.println("The directory you provided for saving the monitor is not accessible. Printing the full stack:");
 											e1.printStackTrace();
 										} 
 										
