@@ -19,6 +19,17 @@ Launching PASS is easy:
 
 ![launch PASS](https://raw.github.com/remenska/PASS/master/screenshots/PASSlaunch.png)
 
+But before you do that, perhaps add the ProfilePropSpec.epx profile to your model:
+
+Select the model, go to the Properties tab, and click on "Add Profile":
+
+![Add Profile](https://raw.github.com/remenska/PASS/master/screenshots/AddProfile.png)
+
+Just select the profile from a file (ProfilePropSpec.epx is in this repository), click OK,  and you're done!
+
+![Select Profile](https://raw.github.com/remenska/PASS/master/screenshots/SelectProfile.png)
+
+
 Screenshots
 -----------
 
