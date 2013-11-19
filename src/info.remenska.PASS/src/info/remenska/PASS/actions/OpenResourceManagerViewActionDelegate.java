@@ -1,7 +1,11 @@
 package info.remenska.PASS.actions;
 
+import java.util.Iterator;
+import java.util.List;
+
 import info.remenska.PASS.wizards.CapturePropertyWizard;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -9,6 +13,9 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.uml2.uml.Model;
+
+import com.ibm.xtools.modeler.ui.UMLModeler;
 
 public class OpenResourceManagerViewActionDelegate implements
 		IWorkbenchWindowActionDelegate {
@@ -27,12 +34,33 @@ public class OpenResourceManagerViewActionDelegate implements
 //			
 //		}
 // Hmmm let's change it to show the wizard instead of the view :)
-		
-		CapturePropertyWizard wizard = new CapturePropertyWizard();
-		WizardDialog dialog = new WizardDialog(window.getShell(), wizard);
+		List selectedElements = UMLModeler.getUMLUIHelper()
+				.getSelectedElements();
+		Model model = null;
+		for (Iterator iter = selectedElements.iterator(); iter.hasNext();) {
 
-		dialog.create();
-		dialog.open();
+			EObject eObject = (EObject) iter.next();
+			String eClassName = eObject.eClass().getName();
+			System.out.print(eClassName + " : ");
+
+			if (eObject instanceof Model) {
+				// System.out.println("You selected the right thing: " +
+				// ((Model) eObject).getName());
+				model = ((Model) eObject);
+			}
+		}
+		if (model == null) {
+			System.out
+					.println("Please select a UML model and open it, before attempting to run PASS. "); //$NON-NLS-1$
+//			System.exit(0);
+		} else {
+			CapturePropertyWizard wizard = new CapturePropertyWizard();
+			WizardDialog dialog = new WizardDialog(window.getShell(),
+					wizard);
+			dialog.create();
+			dialog.open();
+		}
+
 	}
 
 	@Override

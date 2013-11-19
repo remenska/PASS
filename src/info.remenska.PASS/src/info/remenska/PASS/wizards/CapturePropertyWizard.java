@@ -4,7 +4,9 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
@@ -59,23 +61,36 @@ public class CapturePropertyWizard extends Wizard {
 							// code to modify the model goes here
 							// Get selection
 							final Collection<Model> models = UMLModeler.getOpenedModels();
+							List selectedElements = UMLModeler.getUMLUIHelper().getSelectedElements();
+							Model model = null;
+							for (Iterator iter = selectedElements.iterator(); iter.hasNext();) {
+								
+								EObject eObject = (EObject) iter.next();
+								String eClassName = eObject.eClass().getName();
+								System.out.print(eClassName + " : ");
+
+								if (eObject instanceof Model) {
+//									System.out.println("You selected the right thing: " + ((Model) eObject).getName());
+									model = ((Model)eObject);
+								} 
+							}
 							if (models.size() == 0) {
 										System.out.println("Please open a UML model and select it. "); //$NON-NLS-1$
+										System.exit(0);
 							} else{
 		
 							// Log each elements
-							for (Model model:models) {
+//							for (Model model:models) {
 								
 //								 System.out.println("Model NAMESPACE"+((Model) model).getNamespace());
 								 System.out.println("Model qualified name: "+model.getQualifiedName());
 								 System.out.println("Model name: "+model.getName());
 								 System.out.println("Model namespace: "+model.getNamespace());
 								 System.out.println("Model label: "+model.getLabel());
-
+								 // TODO: get only selected model, don't loop over all of them!!
 
 								 System.out.println("------------...");
-								 //TODO: remove second condition?
-								 if(disciplinedEnglishPage.textDirectoryFormula!=null && !model.getName().equalsIgnoreCase("UMLPrimitiveTypes")){
+								 if(disciplinedEnglishPage.textDirectoryFormula!=null){
 									 // property is monitorable, create an mCRL2 process
 									 String path = disciplinedEnglishPage.textDirectoryFormula.getText();
 
@@ -92,7 +107,7 @@ public class CapturePropertyWizard extends Wizard {
 											
 										} catch (FileNotFoundException
 												| UnsupportedEncodingException e1) {
-											System.err.println("The directory you provided for saving the monitor is not accessible. Printing the full stack:");
+											System.err.println("The directory you provided for saving the monitor is not accessible. \n Printing the full stack:");
 											e1.printStackTrace();
 										} 
 										
@@ -149,7 +164,7 @@ public class CapturePropertyWizard extends Wizard {
 									 else if(QuestionTreePage.scope.equals("After Q until R variant"))
 										 propPattern.draw(PropertyPattern.AFTER_LAST_UNTIL);
 								}
-							}
+//							}
 						}
 						}
 					});

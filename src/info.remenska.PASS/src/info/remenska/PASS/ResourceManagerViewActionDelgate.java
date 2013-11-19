@@ -2,50 +2,77 @@ package info.remenska.PASS;
 
 import info.remenska.PASS.wizards.CapturePropertyWizard;
 
-import org.eclipse.core.runtime.IStatus;
+import java.util.Iterator;
+import java.util.List;
+
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
+import org.eclipse.uml2.uml.Model;
+
+import com.ibm.xtools.modeler.ui.UMLModeler;
 
 public class ResourceManagerViewActionDelgate implements IViewActionDelegate {
 
 	private IViewPart view;
+
 	@Override
 	public void run(IAction action) {
-		
-//		
-//		MessageBox box = new MessageBox(view.getSite().getShell(),SWT.ICON_INFORMATION);
-//		box.setMessage("Hello you! You clicked view action!");
-//		box.open();
-		
-//		InputDialog dialog = new InputDialog(view.getSite().getShell(),"Let's try!", 
-//				"Please enter your name","",null);
-//		if (dialog.open() == IStatus.OK){ 
-//			String value = dialog.getValue();
-//			MessageBox box = new MessageBox(view.getSite().getShell(),SWT.ICON_INFORMATION);
-//			box.setMessage("Hey there! You entered: " + value);
-//			box.open();
-//			
-//		} else{
-//			
-//			MessageBox box = new MessageBox(view.getSite().getShell(),SWT.ICON_INFORMATION);
-//			box.setMessage("Bye!");
-//			box.open();
-//			
-//		}
-		
-	CapturePropertyWizard wizard = new CapturePropertyWizard();
-	WizardDialog dialog = new WizardDialog(view.getSite().getShell(), wizard);
 
-	dialog.create();
+		//
+		// MessageBox box = new
+		// MessageBox(view.getSite().getShell(),SWT.ICON_INFORMATION);
+		// box.setMessage("Hello you! You clicked view action!");
+		// box.open();
 
-	dialog.open();
+		// InputDialog dialog = new
+		// InputDialog(view.getSite().getShell(),"Let's try!",
+		// "Please enter your name","",null);
+		// if (dialog.open() == IStatus.OK){
+		// String value = dialog.getValue();
+		// MessageBox box = new
+		// MessageBox(view.getSite().getShell(),SWT.ICON_INFORMATION);
+		// box.setMessage("Hey there! You entered: " + value);
+		// box.open();
+		//
+		// } else{
+		//
+		// MessageBox box = new
+		// MessageBox(view.getSite().getShell(),SWT.ICON_INFORMATION);
+		// box.setMessage("Bye!");
+		// box.open();
+		//
+		// }
 
+		List selectedElements = UMLModeler.getUMLUIHelper()
+				.getSelectedElements();
+		Model model = null;
+		for (Iterator iter = selectedElements.iterator(); iter.hasNext();) {
+
+			EObject eObject = (EObject) iter.next();
+			String eClassName = eObject.eClass().getName();
+			System.out.print(eClassName + " : ");
+
+			if (eObject instanceof Model) {
+				// System.out.println("You selected the right thing: " +
+				// ((Model) eObject).getName());
+				model = ((Model) eObject);
+			}
+		}
+		if (model == null) {
+			System.out
+					.println("Please select a UML model and open it, before attempting to run PASS. "); //$NON-NLS-1$
+//			System.exit(0);
+		} else {
+			CapturePropertyWizard wizard = new CapturePropertyWizard();
+			WizardDialog dialog = new WizardDialog(view.getSite().getShell(),
+					wizard);
+			dialog.create();
+			dialog.open();
+		}
 	}
 
 	@Override
@@ -56,8 +83,9 @@ public class ResourceManagerViewActionDelgate implements IViewActionDelegate {
 
 	@Override
 	public void init(IViewPart view) {
-		this.view = view; //cache the view part, this will be used in run action 
-						// to fetch the parent shell for dialog
+		this.view = view; // cache the view part, this will be used in run
+							// action
+							// to fetch the parent shell for dialog
 	}
 
 }
