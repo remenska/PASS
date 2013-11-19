@@ -1,49 +1,29 @@
 package info.remenska.PASS.wizards;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.TreeMap;
 
-import org.eclipse.ocl.uml.PrimitiveType;
-//import org.eclipse.ocl.uml.impl.PrimitiveTypeImpl;
-//import org.eclipse.ocl.ecore.impl.PrimitiveTypeImpl;
-import org.eclipse.swt.widgets.Control;
-
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EAnnotation;
-import org.eclipse.gmf.runtime.common.ui.services.elementselection.ElementSelectionScope;
-import org.eclipse.jface.viewers.CellEditor.LayoutData;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.events.ExpandEvent;
+import org.eclipse.swt.events.ExpandListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.ExpandBar;
@@ -51,29 +31,18 @@ import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.internal.Workbench;
 import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
-import org.eclipse.uml2.uml.MessageSort;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Parameter;
 import org.eclipse.uml2.uml.ParameterDirectionKind;
 import org.eclipse.uml2.uml.SendOperationEvent;
-import org.eclipse.uml2.uml.ValueSpecification;
-import org.eclipse.uml2.uml.internal.impl.PrimitiveTypeImpl;
-import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.ExpandAdapter;
-import org.eclipse.swt.events.ExpandEvent;
-import org.eclipse.swt.events.ExpandListener;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 
 import com.ibm.xtools.uml.type.IMessageElementType;
 import com.ibm.xtools.uml.type.UMLElementTypes;
 import com.ibm.xtools.uml.ui.internal.dialogs.UMLSelectExistingElementDialog;
-import com.ibm.xtools.uml.ui.internal.dialogs.UMLSelectElementDialog;
-import com.ibm.xtools.uml.ui.internal.dialogs.selectelement.SelectElementDialog;
-import org.eclipse.gmf.runtime.emf.ui.dialogs.AbstractSelectElementDialog;
+//import org.eclipse.ocl.uml.impl.PrimitiveTypeImpl;
+//import org.eclipse.ocl.ecore.impl.PrimitiveTypeImpl;
 public class QuestionTreePage extends WizardPage {
 	class MySelectionListener implements SelectionListener{
 		@Override

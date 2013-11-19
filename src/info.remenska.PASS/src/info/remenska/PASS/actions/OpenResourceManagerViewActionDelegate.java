@@ -8,6 +8,7 @@ import info.remenska.PASS.wizards.CapturePropertyWizard;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -58,10 +59,23 @@ public class OpenResourceManagerViewActionDelegate implements
 			}
 		}
 		if (model == null) {
+			
+			MessageDialog dialog = new MessageDialog(window.getShell(), "Running PASS, almost there...", null,
+					"Please select a UML model and open it, before attempting to run PASS. ", MessageDialog.INFORMATION, new String[] { "OK" }, 0);
+				int result = dialog.open();
+				System.out.println(result); 
+					
 			System.out
 					.println("Please select a UML model and open it, before attempting to run PASS. "); //$NON-NLS-1$
 //			System.exit(0);
 		} else if(!profileApplied){
+			
+			
+			MessageDialog dialog = new MessageDialog(window.getShell(), "Running PASS, almost there...", null,
+					"Pease apply the profile <ProfilePropertySpecs> to avoid problems when generating the SD. \n Consult the GitHub instructions on how to do it.", MessageDialog.INFORMATION, new String[] { "OK" }, 0);
+				int result = dialog.open();
+				System.out.println(result); 
+				
 			System.out.println("Pease apply the profile <ProfilePropertySpecs> to avoid problems when generating the SD. \n Consult the GitHub instructions on how to do it.");
 		}
 		
