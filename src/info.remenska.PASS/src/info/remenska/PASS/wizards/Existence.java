@@ -14,9 +14,12 @@ import org.eclipse.uml2.uml.ConnectorKind;
 import org.eclipse.uml2.uml.ExecutionEvent;
 import org.eclipse.uml2.uml.ExecutionOccurrenceSpecification;
 import org.eclipse.uml2.uml.Interaction;
+import org.eclipse.uml2.uml.InteractionConstraint;
 import org.eclipse.uml2.uml.InteractionOperand;
 import org.eclipse.uml2.uml.InteractionOperatorKind;
 import org.eclipse.uml2.uml.Lifeline;
+import org.eclipse.uml2.uml.LiteralInteger;
+import org.eclipse.uml2.uml.LiteralUnlimitedNatural;
 import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 import org.eclipse.uml2.uml.Model;
@@ -411,7 +414,25 @@ public class Existence extends PropertyPattern {
 		// asssertFragment.createOperand("ASSERT_operand");
 		asssertFragment.getCovereds().add(lifeline1);
 		asssertFragment.getCovereds().add(lifeline2);
-		MessageOccurrenceSpecification se = (MessageOccurrenceSpecification) iop
+		
+		CombinedFragment forFragment = (CombinedFragment) iop.createFragment(null, UMLPackage.eINSTANCE.getCombinedFragment());
+		forFragment.setInteractionOperator(InteractionOperatorKind.LOOP_LITERAL);
+		InteractionOperand iopLoop = forFragment.createOperand("LOOP_operand");
+		InteractionConstraint loopGuard = iopLoop.createGuard("guard");
+//		loopGuard.createMinint(name, type, eClass);
+		
+//		
+		LiteralInteger minValue = (LiteralInteger) loopGuard.createMinint("minConstraint",null, UMLPackage.eINSTANCE.getLiteralInteger() );
+		minValue.setValue(1);
+		
+		
+		LiteralUnlimitedNatural maxValue = (LiteralUnlimitedNatural) loopGuard.createMaxint("maxConstraint",null, UMLPackage.eINSTANCE.getLiteralUnlimitedNatural() );
+		maxValue.setValue(LiteralUnlimitedNatural.UNLIMITED);
+		
+		forFragment.getCovereds().add(lifeline1);
+		forFragment.getCovereds().add(lifeline2);
+		
+		MessageOccurrenceSpecification se = (MessageOccurrenceSpecification) iopLoop
 				.createFragment(null, UMLPackage.eINSTANCE
 						.getMessageOccurrenceSpecification());
 		se.setEvent(soe);
@@ -419,7 +440,7 @@ public class Existence extends PropertyPattern {
 		// se.setName("se");// do we really need a name?
 		se.getCovereds().add(lifeline1);
 
-		MessageOccurrenceSpecification re = (MessageOccurrenceSpecification) iop
+		MessageOccurrenceSpecification re = (MessageOccurrenceSpecification) iopLoop
 				.createFragment(null, UMLPackage.eINSTANCE
 						.getMessageOccurrenceSpecification());
 		re.setEvent(roe);
@@ -427,14 +448,14 @@ public class Existence extends PropertyPattern {
 		// re.setName("re");
 		re.getCovereds().add(lifeline2);
 
-		ExecutionOccurrenceSpecification eos = (ExecutionOccurrenceSpecification) iop
+		ExecutionOccurrenceSpecification eos = (ExecutionOccurrenceSpecification) iopLoop
 				.createFragment(null, UMLPackage.eINSTANCE
 						.getExecutionOccurrenceSpecification());
 		// eos.setName("eos");
 		eos.setEvent(ev1);
 		eos.getCovereds().add(lifeline2);
 
-		BehaviorExecutionSpecification bes = (BehaviorExecutionSpecification) iop
+		BehaviorExecutionSpecification bes = (BehaviorExecutionSpecification) iopLoop
 				.createFragment(null, UMLPackage.eINSTANCE
 						.getBehaviorExecutionSpecification());
 		bes.setStart(re);

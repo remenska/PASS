@@ -59,7 +59,6 @@ public class CapturePropertyWizard extends Wizard {
 							// code to modify the model goes here
 							// Get selection
 							final Collection<Model> models = UMLModeler.getOpenedModels();
-
 							if (models.size() == 0) {
 										System.out.println("Please open a UML model and select it. "); //$NON-NLS-1$
 							} else{
@@ -99,7 +98,7 @@ public class CapturePropertyWizard extends Wizard {
 								 }
 								 
 								 // next create an SD
-								if(model.getName().equalsIgnoreCase("DanielaModel")){
+								if(!model.getName().equalsIgnoreCase("UMLPrimitiveTypes")){
 									 System.out.println("Creating a new SD...");
 
 									 PropertyPattern propPattern = null;
@@ -109,6 +108,8 @@ public class CapturePropertyWizard extends Wizard {
 										 	propPattern = new Existence(model);
 									 else if(QuestionTreePage.behavior.equals("Bounded Existence"))
 										 	propPattern = new BoundedExistence(model);
+									 else if(QuestionTreePage.behavior.equals("Universality"))
+										 	propPattern = new Universality(model);
 									 else if(QuestionTreePage.behavior.equals("Precedence"))
 										 	propPattern = new Precedence(model);
 									 else if(QuestionTreePage.behavior.equals("Precedence variant"))

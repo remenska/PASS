@@ -345,7 +345,7 @@ public void draw_globallyBoundedExistence(Model m){
 		
 		
 		LiteralUnlimitedNatural maxValue = (LiteralUnlimitedNatural) loopGuard.createMaxint("maxConstraint",null, UMLPackage.eINSTANCE.getLiteralUnlimitedNatural() );
-		maxValue.setValue(2);
+		maxValue.setValue(1);
 		
 		System.out.println("REACHED HERE...");
 		

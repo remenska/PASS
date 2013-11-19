@@ -567,11 +567,8 @@ public class Response extends PropertyPattern {
 						UMLPackage.eINSTANCE.getLiteralUnlimitedNatural());
 		maxValue.setValue(2);
 
-		System.out.println("REACHED HERE...");
-
 		// ((LiteralInteger) loopGuard.getMinint()).setValue(0);
 		// ((LiteralUnlimitedNatural)loopGuard.getMaxint()).setValue(2);
-		System.out.println("REACHED HERE...????");
 
 		forFragment.getCovereds().add(lifeline1);
 		forFragment.getCovereds().add(lifeline2);
