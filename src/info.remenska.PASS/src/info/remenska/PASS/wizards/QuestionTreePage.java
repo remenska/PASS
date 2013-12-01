@@ -562,7 +562,7 @@ public class QuestionTreePage extends WizardPage {
 		question.setHeight(answersContainer.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 		System.out.println("Dynamic QUESTIONNAIRE!!: ");
 		traverseQuestionnaire(dynamicQuestionnaire);
-		Pattern.fill();
+		PatternMuCalculusFormat.fill();
 	}
 	
 	class MyExpandListener implements ExpandListener{

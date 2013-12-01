@@ -342,7 +342,7 @@ public class DisciplinedEnglishPage  extends WizardPage  {
 		    		  //and again
 		      }	
 		    			StringBuffer modifiedBuffer = new StringBuffer();
-		    			modifiedBuffer.append(Pattern.patterns.get(QuestionTreePage.scope).get(QuestionTreePage.behavior));
+		    			modifiedBuffer.append(PatternMuCalculusFormat.patterns.get(QuestionTreePage.scope).get(QuestionTreePage.behavior));
 		    			modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" Q ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textStartEvent).toString())+"  ");
 		    			modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" R ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textEndEvent).toString())+"  ");
 		    			modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" P ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textEventA).toString())+"  ");
@@ -350,7 +350,7 @@ public class DisciplinedEnglishPage  extends WizardPage  {
 
 		    			if (QuestionTreePage.behavior.equals("Precedence Chain 1")) {
 		    				modifiedBuffer = new StringBuffer();
-		    				modifiedBuffer.append(Pattern.patterns.get(QuestionTreePage.scope).get(QuestionTreePage.behavior));
+		    				modifiedBuffer.append(PatternMuCalculusFormat.patterns.get(QuestionTreePage.scope).get(QuestionTreePage.behavior));
 		    				modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" Q ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textStartEvent).toString())+"  ");
 		    				modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" R ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textEndEvent).toString())+"  ");
 		    				modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" S ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textEventA).toString())+"  ");
@@ -361,7 +361,7 @@ public class DisciplinedEnglishPage  extends WizardPage  {
 		    			} else if(QuestionTreePage.behavior.equals("Precedence Chain 2")){
 		    				
 		    				modifiedBuffer = new StringBuffer();
-		    				modifiedBuffer.append(Pattern.patterns.get(QuestionTreePage.scope).get(QuestionTreePage.behavior));
+		    				modifiedBuffer.append(PatternMuCalculusFormat.patterns.get(QuestionTreePage.scope).get(QuestionTreePage.behavior));
 		    				modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" Q ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textStartEvent).toString())+"  ");
 		    				modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" R ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textEndEvent).toString())+"  ");
 		    				modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" P ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textEventA).toString())+"  ");
@@ -370,7 +370,7 @@ public class DisciplinedEnglishPage  extends WizardPage  {
 
 		    			}	else if(QuestionTreePage.behavior.equals("Response Chain 1")) {
 		    				modifiedBuffer = new StringBuffer();
-		    				modifiedBuffer.append(Pattern.patterns.get(QuestionTreePage.scope).get(QuestionTreePage.behavior));
+		    				modifiedBuffer.append(PatternMuCalculusFormat.patterns.get(QuestionTreePage.scope).get(QuestionTreePage.behavior));
 		    				modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" Q ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textStartEvent).toString())+"  ");
 		    				modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" R ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textEndEvent).toString())+"  ");
 		    				modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" S ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textEventA).toString())+"  ");
@@ -379,7 +379,7 @@ public class DisciplinedEnglishPage  extends WizardPage  {
 
 		    			}	else if(QuestionTreePage.behavior.equals("Response Chain 2")){
 		    				modifiedBuffer = new StringBuffer();
-		    				modifiedBuffer.append(Pattern.patterns.get(QuestionTreePage.scope).get(QuestionTreePage.behavior));
+		    				modifiedBuffer.append(PatternMuCalculusFormat.patterns.get(QuestionTreePage.scope).get(QuestionTreePage.behavior));
 		    				modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" Q ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textStartEvent).toString())+"  ");
 		    				modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" R ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textEndEvent).toString())+"  ");
 		    				modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" P ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textEventA).toString())+"  ");
@@ -389,7 +389,7 @@ public class DisciplinedEnglishPage  extends WizardPage  {
 		    			}
 		    			else if(QuestionTreePage.behavior.equals("Constrained Response Chain 2")){
 		    				modifiedBuffer = new StringBuffer();
-		    				modifiedBuffer.append(Pattern.patterns.get(QuestionTreePage.scope).get(QuestionTreePage.behavior));
+		    				modifiedBuffer.append(PatternMuCalculusFormat.patterns.get(QuestionTreePage.scope).get(QuestionTreePage.behavior));
 		    				modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" Q ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textStartEvent).toString())+"  ");
 		    				modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" R ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textEndEvent).toString())+"  ");
 		    				modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" P ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textEventA).toString())+"  ");
@@ -437,9 +437,9 @@ public class DisciplinedEnglishPage  extends WizardPage  {
 		textFormula.setLineJustify(0, 1, true);
 		textFormula.setLayoutData(gd);
 		
-		Pattern.fill();
+		PatternMuCalculusFormat.fill();
 		StringBuffer modifiedBuffer = new StringBuffer();
-		modifiedBuffer.append(Pattern.patterns.get(QuestionTreePage.scope).get(QuestionTreePage.behavior));
+		modifiedBuffer.append(PatternMuCalculusFormat.patterns.get(QuestionTreePage.scope).get(QuestionTreePage.behavior));
 		modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" Q ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textStartEvent).toString())+" ");
 		modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" R ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textEndEvent).toString())+" ");
 		modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" P ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textEventA).toString())+" ");
@@ -447,7 +447,7 @@ public class DisciplinedEnglishPage  extends WizardPage  {
 
 		if (QuestionTreePage.behavior.equals("Precedence Chain 1")) {
 			modifiedBuffer = new StringBuffer();
-			modifiedBuffer.append(Pattern.patterns.get(QuestionTreePage.scope).get(QuestionTreePage.behavior));
+			modifiedBuffer.append(PatternMuCalculusFormat.patterns.get(QuestionTreePage.scope).get(QuestionTreePage.behavior));
 			modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" Q ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textStartEvent).toString())+"  ");
 			modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" R ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textEndEvent).toString())+"  ");
 			modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" S ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textEventA).toString())+"  ");
@@ -458,7 +458,7 @@ public class DisciplinedEnglishPage  extends WizardPage  {
 		} else if(QuestionTreePage.behavior.equals("Precedence Chain 2")){
 			
 			modifiedBuffer = new StringBuffer();
-			modifiedBuffer.append(Pattern.patterns.get(QuestionTreePage.scope).get(QuestionTreePage.behavior));
+			modifiedBuffer.append(PatternMuCalculusFormat.patterns.get(QuestionTreePage.scope).get(QuestionTreePage.behavior));
 			modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" Q ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textStartEvent).toString())+"  ");
 			modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" R ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textEndEvent).toString())+"  ");
 			modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" P ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textEventA).toString())+"  ");
@@ -467,7 +467,7 @@ public class DisciplinedEnglishPage  extends WizardPage  {
 
 		}	else if(QuestionTreePage.behavior.equals("Response Chain 1")) {
 			modifiedBuffer = new StringBuffer();
-			modifiedBuffer.append(Pattern.patterns.get(QuestionTreePage.scope).get(QuestionTreePage.behavior));
+			modifiedBuffer.append(PatternMuCalculusFormat.patterns.get(QuestionTreePage.scope).get(QuestionTreePage.behavior));
 			modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" Q ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textStartEvent).toString())+"  ");
 			modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" R ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textEndEvent).toString())+"  ");
 			modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" S ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textEventA).toString())+"  ");
@@ -476,7 +476,7 @@ public class DisciplinedEnglishPage  extends WizardPage  {
 
 		}	else if(QuestionTreePage.behavior.equals("Response Chain 2")){
 			modifiedBuffer = new StringBuffer();
-			modifiedBuffer.append(Pattern.patterns.get(QuestionTreePage.scope).get(QuestionTreePage.behavior));
+			modifiedBuffer.append(PatternMuCalculusFormat.patterns.get(QuestionTreePage.scope).get(QuestionTreePage.behavior));
 			modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" Q ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textStartEvent).toString())+"  ");
 			modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" R ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textEndEvent).toString())+"  ");
 			modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" P ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textEventA).toString())+"  ");
@@ -486,7 +486,7 @@ public class DisciplinedEnglishPage  extends WizardPage  {
 		}
 		else if(QuestionTreePage.behavior.equals("Constrained Response Chain 2")){
 			modifiedBuffer = new StringBuffer();
-			modifiedBuffer.append(Pattern.patterns.get(QuestionTreePage.scope).get(QuestionTreePage.behavior));
+			modifiedBuffer.append(PatternMuCalculusFormat.patterns.get(QuestionTreePage.scope).get(QuestionTreePage.behavior));
 			modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" Q ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textStartEvent).toString())+"  ");
 			modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" R ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textEndEvent).toString())+"  ");
 			modifiedBuffer = new StringBuffer(modifiedBuffer.toString().replaceAll(" P ", " "+QuestionTreePage.traceLineMap.get(QuestionTreePage.textEventA).toString())+"  ");
@@ -498,7 +498,7 @@ public class DisciplinedEnglishPage  extends WizardPage  {
 		
 		textFormula.setText(modifiedBuffer.toString());
 		final Label labelDirectoryFormula = new Label(composite, SWT.NONE);
-		if (Pattern.patternsMonitorable.get(QuestionTreePage.scope).get(QuestionTreePage.behavior).booleanValue()){
+		if (PatternMuCalculusFormat.patternsMonitorable.get(QuestionTreePage.scope).get(QuestionTreePage.behavior).booleanValue()){
 			System.out.println("Monitorable...");
 			labelDirectoryFormula.setText("Select a directory where the monitor mcrl2 code will be saved:");
 			GridData data = new GridData();
