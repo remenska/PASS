@@ -17,9 +17,8 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 public class Mymcrl2Visitor extends mcrl2BaseVisitor<String>  {
 	public static BufferedTokenStream tokens;
     public static TokenStreamRewriter rewriter;
-    public static LinkedList<String> actions = new LinkedList<String>();
     public static Hashtable<String, ArrayList<String>> actionsDict = new Hashtable<String, ArrayList<String>>();
-
+    public static String afterInit = new String();
     public static Hashtable<String,String> varDeclarations = new Hashtable<String,String>();
 
     public Mymcrl2Visitor(BufferedTokenStream tokens) {
@@ -118,9 +117,11 @@ public class Mymcrl2Visitor extends mcrl2BaseVisitor<String>  {
 	}
 
 	@Override public String visitInit(@NotNull mcrl2Parser.InitContext ctx) {
+		afterInit = ctx.procExpr().getText();
 		return null;
 //		return visitChildren(ctx); 
 	}
+
 
 }
 
