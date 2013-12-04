@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -139,9 +140,6 @@ public class DisciplinedEnglishPage  extends WizardPage  {
 	public void createControl(Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NONE);
 
-        
-		System.out.println("NOW WE'RE IN!");
-//		aman = composite;
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 2;
 		composite.setLayout(layout);
@@ -250,7 +248,7 @@ public class DisciplinedEnglishPage  extends WizardPage  {
 	    				noParams.setLayoutData(gd);	    			
 	    			}
 	    		}
-		    	System.out.println("EventInfo children:"+eventInfo.getChildren());
+//		    	System.out.println("EventInfo children:"+eventInfo.getChildren());
 
 	    	} 
 	    }
@@ -499,8 +497,8 @@ public class DisciplinedEnglishPage  extends WizardPage  {
 		textFormula.setText(modifiedBuffer.toString());
 		final Label labelDirectoryFormula = new Label(composite, SWT.NONE);
 		if (PatternMuCalculusFormat.patternsMonitorable.get(QuestionTreePage.scope).get(QuestionTreePage.behavior).booleanValue()){
-			System.out.println("Monitorable...");
-			labelDirectoryFormula.setText("Select a directory where the monitor mcrl2 code will be saved:");
+//			System.out.println("Monitorable...");
+			labelDirectoryFormula.setText("Select the file containing the mCRL2 model:");
 			GridData data = new GridData();
 		    data.horizontalSpan = 2;
 //		    data.verticalSpan = 2;
@@ -516,14 +514,13 @@ public class DisciplinedEnglishPage  extends WizardPage  {
 			button.setText("Browse...");
 			button.addSelectionListener(new SelectionAdapter() {
 			      public void widgetSelected(SelectionEvent event) {
-			    	DirectoryDialog dlg = new DirectoryDialog(getShell());
-			        
+			    	FileDialog dlg = new FileDialog(getShell());
 			        dlg.setFilterPath(textDirectoryFormula.getText());
 
-			        dlg.setText("Select a Directory");
+			        dlg.setText("Please select the original mCRL2 model.");
 
 			        // Customizable message displayed in the dialog
-			        dlg.setMessage("Select a directory where the file containing the mu-calculus formula will be saved");
+//			        dlg.setMessage("Please select the original mCRL2 model.");
 
 			        // Calling open() will open and run the dialog.
 			        // It will return the selected directory, or
@@ -551,6 +548,7 @@ public class DisciplinedEnglishPage  extends WizardPage  {
 			gd = new GridData();
 			gd.horizontalSpan = 2;
 			textDirectoryFormula.setLayoutData(gd);
+			
 		}
 		else {
 		    GridData  data = new GridData();

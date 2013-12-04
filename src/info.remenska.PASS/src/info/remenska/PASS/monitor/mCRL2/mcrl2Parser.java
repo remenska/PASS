@@ -127,10 +127,8 @@ public class mcrl2Parser extends Parser {
 			setState(156); mCRL2Spec();
 			}
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+		catch (RecognitionException e) {
+			 throw e; 
 		}
 		finally {
 			exitRule();

@@ -1,4 +1,8 @@
 package info.remenska.PASS.wizards;
+import org.antlr.v4.runtime.CharStream;
+
+import info.remenska.PASS.monitor.mCRL2.Main;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -13,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.uml2.uml.Model;
@@ -47,6 +52,44 @@ public class CapturePropertyWizard extends Wizard {
 	}
 	@Override
 	public boolean performFinish() {
+		Main main = new Main();
+		String resultModel = new String();
+		// generate the model with the monitor
+			try {
+				resultModel = main.generateMonitor(new String[]{DisciplinedEnglishPage.textDirectoryFormula.getText(),DisciplinedEnglishPage.textFormula.getText(), "false"});
+			} catch (FileNotFoundException e2) {
+				MessageDialog dialog = new MessageDialog(getShell(), "Generating model, almost there...", null,
+						"PROBLEM! File does not exist or permission denied:\n" + e2.getMessage(), MessageDialog.INFORMATION, new String[] { "OK" }, 0);
+					int result = dialog.open();
+				System.out.println("PROBLEM! File does not exist or permission denied:" + e2.getMessage());
+				return false;
+
+			} catch (NullPointerException e2) {
+				MessageDialog dialog = new MessageDialog(getShell(), "Generating model, almost there...", null,
+						"PROBLEM! Mu-calculus formula or mCRL2 is not well formed." + e2.getMessage(), MessageDialog.INFORMATION, new String[] { "OK" }, 0);
+				int result = dialog.open();
+
+				System.out.println("Mu-calculus formula or mCRL2 is not well formed. ");
+				e2.printStackTrace();
+				return false;
+			} catch(RuntimeException e){
+				MessageDialog dialog = new MessageDialog(getShell(), "Generating model, almost there...", null,
+						"OOPS! Sorry, something went wrong during parsing. \nCheck for synax errors in formula or model.", MessageDialog.INFORMATION, new String[] { "OK" }, 0);
+				int result = dialog.open();
+				e.printStackTrace();
+				return false;
+			} catch (Exception e2) {
+				// TODO Auto-generated catch block
+				MessageDialog dialog = new MessageDialog(getShell(), "Generating model, almost there...", null,
+						"PROBLEM! Sorry, something went wrong during parsing." + e2.getMessage(), MessageDialog.INFORMATION, new String[] { "OK" }, 0);
+				int result = dialog.open();
+				e2.printStackTrace();
+				return false;
+			}
+			MessageDialog dialog = new MessageDialog(getShell(), "Model with the monitor has been generated", null,
+					"The new model is written at: \n" +resultModel , MessageDialog.INFORMATION, new String[] { "OK" }, 0);
+			int result = dialog.open();
+
 		// here is where we generate the SD
 		
 		try {
@@ -67,7 +110,7 @@ public class CapturePropertyWizard extends Wizard {
 								
 								EObject eObject = (EObject) iter.next();
 								String eClassName = eObject.eClass().getName();
-								System.out.print(eClassName + " : ");
+//								System.out.print(eClassName + " : ");
 
 								if (eObject instanceof Model) {
 //									System.out.println("You selected the right thing: " + ((Model) eObject).getName());
@@ -90,28 +133,7 @@ public class CapturePropertyWizard extends Wizard {
 								 // TODO: get only selected model, don't loop over all of them!!
 
 								 System.out.println("------------...");
-								 if(disciplinedEnglishPage.textDirectoryFormula!=null){
-									 // property is monitorable, create an mCRL2 process
-									 String path = disciplinedEnglishPage.textDirectoryFormula.getText();
-
-										PrintWriter writer;
-										try {
-											String fullPath= path+"/monitor_" + (int )(Math.random() * 500 + 1) + ".mcrl2";
-											writer = new PrintWriter(fullPath, "UTF-8");
-											File f = new File(fullPath);
-
-//											writer.println("The first line");
-											writer.println("% " + disciplinedEnglishPage.textFormula.getText());
-											writer.close();
-
-											
-										} catch (FileNotFoundException
-												| UnsupportedEncodingException e1) {
-											System.err.println("The directory you provided for saving the monitor is not accessible. \n Printing the full stack:");
-											e1.printStackTrace();
-										} 
-										
-								 }
+							
 								 
 								 // next create an SD
 								if(!model.getName().equalsIgnoreCase("UMLPrimitiveTypes")){
@@ -168,10 +190,10 @@ public class CapturePropertyWizard extends Wizard {
 						}
 						}
 					});
-
 		} catch (Exception e) {
 			System.out.println("The operation was interrupted"); //$NON-NLS-1$
 			System.out.println("StackTrace: "+ e);
+			return false;
 		}	
 		
 		this.getShell().setFocus();

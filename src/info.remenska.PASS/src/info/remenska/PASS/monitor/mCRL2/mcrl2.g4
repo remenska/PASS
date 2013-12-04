@@ -1,5 +1,7 @@
 // Author(s): Wieger Wesselink
 grammar mcrl2;
+
+
 start : mCRL2Spec ;
 
 //--- mCRL2 specification

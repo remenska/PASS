@@ -1,32 +1,169 @@
 package info.remenska.PASS.monitor.mCRL2;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 
-//import org.antlr.runtime.ANTLRInputStream;
-import org.antlr.runtime.ANTLRStringStream;
-//import org.antlr.runtime.CharStream;
-import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.ANTLRFileStream;
+import org.antlr.v4.runtime.BailErrorStrategy;
+import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.TokenSource;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
-import org.antlr.v4.runtime.TokenStreamRewriter;
 import org.apache.commons.io.IOUtils;
+//import org.antlr.runtime.ANTLRInputStream;
+//import org.antlr.runtime.CharStream;
 
 public class Main {
+	
+
+	public String generateMonitor(String args[]) throws java.io.FileNotFoundException,NotMonitorableException, java.lang.NullPointerException,Exception{
+		String result = new String();
+		if(args.length<2){
+			System.out.println("Your arguments: " + args.toString());
+			System.out.println("Usage: java info.remenska.PASS.monitor.mCRL2.Main <mCRL2ModelFile> <muCalculusFile> <humanReadable>");
+			System.out.println("\t\t<humanReadable> is optional boolean switch, and if set to true, \n\t\tyields to process names that are not parsable by mCRL2. ");
+			System.out.println("\t\tIt should be used this way only for inspecting the translation. Default value is false.");
+			return result;
+//			System.exit(1);
+		}
+		try{
+		String actionSort = new String();
+		String actionFormula = new String();
+		String mappings = new String();
+		// First thing's first
+		// "/home/daniela/Documents/mCRL2_new_models/June2013/ForallExample.mcrl2"			
+			
+		InputStream ismcrl2 = new FileInputStream(args[0]);
+		//TODO: First a visitor to collect all the action declarations of a model, for this we need the 
+		//full mCRL2 grammar
+		String initialStringmcrl2 = IOUtils.toString(ismcrl2);	
+		String[] splitModel = initialStringmcrl2.split("init ");
+		
+	
+		mcrl2Lexer lexermcrl2 = new mcrl2Lexer((CharStream) new ANTLRInputStream(initialStringmcrl2));
+		CommonTokenStream tokensmcrl2 = new CommonTokenStream(lexermcrl2);
+		mcrl2Parser parsermcrl2 = new mcrl2Parser(tokensmcrl2);
+		parsermcrl2.setErrorHandler(new BailErrorStrategy());
+		ParseTree treemcrl2 =  parsermcrl2.start();
+		
+		
+		// we're using this visitor just to collect action && argument types
+		Mymcrl2Visitor visitormcrl2 = new Mymcrl2Visitor(tokensmcrl2);
+		visitormcrl2.visit(treemcrl2);
+		actionSort = createActionSort(visitormcrl2);
+		actionFormula = createActionFormulaSort();
+		mappings = createMappings(visitormcrl2);
+	
+		// END we're using this visitor just to collect action && argument types
+
+		// end first thing's first
+		// "/home/daniela/IBM/rationalsdp/workspace1/info.remenska.PASS/src/info/remenska/PASS/monitor/mCRL2/test.mu"
+//		InputStream is = new FileInputStream(args[1]);
+		//TODO: First a visitor to collect all the action declarations and the init part of a model, for these we need the 
+		//full mCRL2 grammar
+//		String initialString = IOUtils.toString(is);
+		String finalString = args[1];
+
+		System.out.println("----------------------------------------");
+		System.out.println("Original formula : " + finalString);		
+	 
+		mucalculusLexer lexer = new mucalculusLexer((CharStream) new ANTLRInputStream(finalString));
+		CommonTokenStream tokens = new CommonTokenStream(lexer);
+		mucalculusParser parser = new mucalculusParser(tokens);
+		parser.setErrorHandler(new BailErrorStrategy());
+
+		ParseTree tree = parser.start();
+//        System.out.println(parser.getState());
+
+		MyMuCalculusVisitorSilent visitor = new MyMuCalculusVisitorSilent(tokens);
+		visitor.visit(tree);
+
+		finalString = preprocess(MyMuCalculusVisitorSilent.rewriter.getText());
+		
+//        System.out.println("JOVO NA NOVO : "+ finalString);
+        lexer = new mucalculusLexer((CharStream) new ANTLRInputStream(finalString));
+        tokens = new CommonTokenStream(lexer);
+        parser = new mucalculusParser(tokens);
+		parser.setErrorHandler(new BailErrorStrategy());
+        tree = parser.start();
+        visitor = new MyMuCalculusVisitorSilent(tokens);
+		visitor.visit(tree);
+		String finalStringModified = preprocess(MyMuCalculusVisitorSilent.rewriter.getText());
+		System.out.println("----------------------------------------");
+        System.out.println("Modified formula : "+ finalStringModified);
+		System.out.println("----------------------------------------");
+        lexer = new mucalculusLexer((CharStream) new ANTLRInputStream(finalStringModified));
+        tokens = new CommonTokenStream(lexer);
+        parser = new mucalculusParser(tokens);
+		parser.setErrorHandler(new BailErrorStrategy());
+
+        tree = parser.start();
+        MyMuCalculusVisitor visitor1 = null;
+        if(args.length==3)
+          visitor1 = new MyMuCalculusVisitor(tokens, Mymcrl2Visitor.actionsDict, Boolean.parseBoolean(args[2]));
+        else
+          visitor1 = new MyMuCalculusVisitor(tokens, Mymcrl2Visitor.actionsDict, false);
+        
+        visitor1.visit(tree);
+        StringBuffer outputModel = new StringBuffer();
+        outputModel.append("% Original formula:" + finalString +"\n");
+        outputModel.append("% ============================\n");
+        outputModel.append("% Modified formula:" + finalStringModified + "\n" );
+        outputModel.append("% ============================\n");
+
+        outputModel.append(actionSort);
+        outputModel.append(actionFormula);
+        outputModel.append(mappings);
+        outputModel.append(MyMuCalculusVisitor.finalResult.toString());
+        outputModel.append(createInit());
+//        System.out.println(actionSort);
+//        System.out.println(actionFormula);
+//        System.out.println(mappings);
+//        System.out.println(MyMuCalculusVisitor.finalResult.toString());
+//        System.out.println(createInit());
+        
+        BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(args[0]+"_mod.mcrl2"));
+        for(int i=0;i<(splitModel.length-1);i++) // just in case there are commented 'init' in the spec; there should be only one valid anyway
+            os.write(splitModel[i].getBytes());
+        os.flush();
+        String generated = "\n%====== MONITOR PART GENERATED ==============\n";
+        os.write(generated.getBytes());
+        os.write(outputModel.toString().getBytes());
+        os.flush();
+        result = new String(args[0] + "_mod.crl2");
+		}catch(java.io.FileNotFoundException e){
+			System.out.println("PROBLEM! File does not exist or permission denied:" + e.getMessage());
+			throw e;
+		}
+		
+		catch(java.lang.NullPointerException e){
+			System.out.println("Mu-calculus formula or mCRL2 is not well formed. ");
+			throw e;
+//			throw new NullPointerException();
+//			System.err.println("Exception stack trace=========");
+//			e.printStackTrace(new PrintStream(System.err));
+		} catch(RuntimeException e){
+			System.out.println("Something went terribly wrong. Check for syntax errors in model or formula");
+			throw e;
+
+		}
+		catch(Exception e){
+			System.out.println("Something went terribly wrong. ");
+			throw e;
+//			throw new NullPointerException();
+//			System.err.println("Exception stack trace=========");
+//			e.printStackTrace(new PrintStream(System.err));
+		}
+        return result;
+		
+	}
+	
+	
 	public static void main(String[] args) throws Exception {
 		if(args.length<2){
 			System.out.println("Usage: java info.remenska.PASS.monitor.mCRL2.Main <mCRL2ModelFile> <muCalculusFile> <humanReadable>");
@@ -34,19 +171,19 @@ public class Main {
 			System.out.println("\t\tIt should be used this way only for inspecting the translation. Default value is false.");
 			System.exit(1);
 		}
+		try{
 		String actionSort = new String();
 		String actionFormula = new String();
 		String mappings = new String();
 		// First thing's first
-		// "/home/daniela/Documents/mCRL2_new_models/June2013/ForallExample.mcrl2"
+		// "/home/daniela/Documents/mCRL2_new_models/June2013/ForallExample.mcrl2"			
+			
 		InputStream ismcrl2 = new FileInputStream(args[0]);
 		//TODO: First a visitor to collect all the action declarations of a model, for this we need the 
 		//full mCRL2 grammar
 		String initialStringmcrl2 = IOUtils.toString(ismcrl2);	
 		String[] splitModel = initialStringmcrl2.split("init ");
 		
-		try{ 
-			
 	
 		mcrl2Lexer lexermcrl2 = new mcrl2Lexer((CharStream) new ANTLRInputStream(initialStringmcrl2));
 		CommonTokenStream tokensmcrl2 = new CommonTokenStream(lexermcrl2);
@@ -60,13 +197,7 @@ public class Main {
 		actionSort = createActionSort(visitormcrl2);
 		actionFormula = createActionFormulaSort();
 		mappings = createMappings(visitormcrl2);
-		}
-		catch(java.lang.NullPointerException e){
-			System.out.println("mCRL2 model is not well formed.");
-			System.err.println("Exception stack trace=========");
-			e.printStackTrace(new PrintStream(System.err));
-			System.exit(1);
-		}
+	
 		// END we're using this visitor just to collect action && argument types
 
 		// end first thing's first
@@ -79,7 +210,7 @@ public class Main {
 
 		System.out.println("----------------------------------------");
 		System.out.println("Original formula : " + finalString);		
-		try{ 
+	 
 		mucalculusLexer lexer = new mucalculusLexer((CharStream) new ANTLRInputStream(finalString));
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		mucalculusParser parser = new mucalculusParser(tokens);
@@ -89,20 +220,20 @@ public class Main {
 		MyMuCalculusVisitorSilent visitor = new MyMuCalculusVisitorSilent(tokens);
 		visitor.visit(tree);
 
-		finalString = preprocess(MyMuCalculusVisitorSilent.rewriter.getText());
+		String finalStringModified = preprocess(MyMuCalculusVisitorSilent.rewriter.getText());
 		
 //        System.out.println("JOVO NA NOVO : "+ finalString);
-        lexer = new mucalculusLexer((CharStream) new ANTLRInputStream(finalString));
+        lexer = new mucalculusLexer((CharStream) new ANTLRInputStream(finalStringModified));
         tokens = new CommonTokenStream(lexer);
         parser = new mucalculusParser(tokens);
         tree = parser.start();
         visitor = new MyMuCalculusVisitorSilent(tokens);
 		visitor.visit(tree);
-		finalString = preprocess(MyMuCalculusVisitorSilent.rewriter.getText());
+		finalStringModified = preprocess(MyMuCalculusVisitorSilent.rewriter.getText());
 		System.out.println("----------------------------------------");
-        System.out.println("Modified formula : "+ finalString);
+        System.out.println("Modified formula : "+ finalStringModified);
 		System.out.println("----------------------------------------");
-        lexer = new mucalculusLexer((CharStream) new ANTLRInputStream(finalString));
+        lexer = new mucalculusLexer((CharStream) new ANTLRInputStream(finalStringModified));
         tokens = new CommonTokenStream(lexer);
         parser = new mucalculusParser(tokens);
         tree = parser.start();
@@ -114,6 +245,11 @@ public class Main {
         
         visitor1.visit(tree);
         StringBuffer outputModel = new StringBuffer();
+        outputModel.append("% Original formula:" + finalString +"\n");
+        outputModel.append("% ============================\n");
+        outputModel.append("% Modified formula:" + finalStringModified + "\n" );
+        outputModel.append("% ============================\n");
+
         outputModel.append(actionSort);
         outputModel.append(actionFormula);
         outputModel.append(mappings);
@@ -124,6 +260,7 @@ public class Main {
 //        System.out.println(mappings);
 //        System.out.println(MyMuCalculusVisitor.finalResult.toString());
 //        System.out.println(createInit());
+        
         BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(args[0]+"_mod.mcrl2"));
         for(int i=0;i<(splitModel.length-1);i++) // just in case there are commented 'init' in the spec; there should be only one valid anyway
             os.write(splitModel[i].getBytes());
@@ -132,50 +269,25 @@ public class Main {
         os.write(outputModel.toString().getBytes());
         os.flush();
         System.out.println("The new model has been written at: \n" + args[0] + "_mod.crl2" + "\n");
+        
+		}catch(java.io.FileNotFoundException e){
+			System.out.println("PROBLEM! File does not exist or permission denied:" + e.getMessage());
 		}
-
+		
 		catch(java.lang.NullPointerException e){
-			System.out.println("Mu-calculus formula is not well formed. ");
-			System.err.println("Exception stack trace=========");
-			e.printStackTrace(new PrintStream(System.err));
+			System.out.println("Mu-calculus formula or mCRL2 is not well formed. ");
+//			throw new NullPointerException();
+//			System.err.println("Exception stack trace=========");
+//			e.printStackTrace(new PrintStream(System.err));
 			System.exit(1);
 		}
 
-		
-//		System.out.println(MyMuCalculusVisitor.actions);
-//		System.out.println(MyMuCalculusVisitor.varDeclarations);
-//        for(int i=0;i<MyMuCalculusVisitor.rewriter.getTokenStream().size();i++)
-//        System.out.println("tokens : "+ MyMuCalculusVisitor.rewriter.getTokenStream().get(i));
 
-//        System.out.println(MyMuCalculusVisitor.rewriter.getTokenStream().get(25).getText());
-//        lexer.reset();
-//        System.out.println("NOVA : "+ MyMuCalculusVisitor.tokens);
-        
-//        finalString = MyMuCalculusVisitor.rewriter.getText();
-//        lexer = new mucalculusLexer((CharStream) new ANTLRInputStream(finalString));
-//		tokens = new CommonTokenStream(lexer);
-//        tokens = (CommonTokenStream) MyMuCalculusVisitor.rewriter.getTokenStream();
-//        parser = new mucalculusParser(tokens);
-////        parser.reset();
-////        System.out.println(parser.getState());
-//        tree = parser.start();
-//        visitor = new MyMuCalculusVisitor(tokens);
-//		visitor.visit(tree);
-//        System.out.println("AMAAAN : "+ MyMuCalculusVisitor.rewriter.getText());
-        
-//        lexer = new mucalculusLexer((CharStream) new ANTLRInputStream(finalString));
-//        System.out.println("New formula: " + finalString);
-//        tokens = new CommonTokenStream(lexer);
-//        parser = new mucalculusParser(tokens);
-//        tree = parser.start();
-//        visitor = new MyMuCalculusVisitor(tokens);
-//		visitor.visit(tree);
 	}
 	
 	public static String preprocess(String input){
 		StringBuffer buffer = new StringBuffer(input);
 		
-//		buffer = new StringBuffer(buffer.toString().replaceAll("\\s+",""));
 		buffer = new StringBuffer(buffer.toString().replaceAll("forall", "forall "));		
 		buffer = new StringBuffer(buffer.toString().replaceAll("exists", "exists "));		
 		buffer = new StringBuffer(buffer.toString().replaceAll("mu", ",mu "));		
