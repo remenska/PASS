@@ -12,6 +12,9 @@ the steep learning curve associated to the languages—typically temporal logics
 used for specifying the application-specific properties to be checked. To bring the
 process of correctly eliciting functional properties closer to software engineers,
 we introduce PASS, a Property ASSistant wizard as part of a UML-based front-end to the mCRL2 toolset. PASS instantiates pattern templates using three notations: a natural language summary, a μ-calculus formula and a UML sequence diagram depicting the desired behavior. Most approaches to date have focused on LTL, which is a state-based formalism. Conversely, μ-calculus is event-based, making it a good match for sequence diagrams, where communication between components is depicted. 
+Last but not least, we automatically generate monitors based on a mu-calculus formula, which can be used for property-driven on-the-fly model
+checking using the standard state-space exploration facilities of mCRL2. 
+
 
 PASS is developed as an Eclipse plug-in (only around 5k loc), so you can easily install it by adding the .jar file to your ECLIPSE_HOME/plugins directory.
 
