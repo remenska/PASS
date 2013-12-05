@@ -1,1 +1,1 @@
-forall ahead:Bool. [true*. synch_call(1, ExecutorDispatcher, __eDispatch, pushTask(JobPath, 22, ahead))] false        
+forall d:Nat,f:Nat.[action1(d).action2.action3(f).forall s:Nat.action1(s)]false

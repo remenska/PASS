@@ -22,7 +22,7 @@ public class Mymcrl2Visitor extends mcrl2BaseVisitor<String>  {
     public static Hashtable<String,String> varDeclarations = new Hashtable<String,String>();
 
     public Mymcrl2Visitor(BufferedTokenStream tokens) {
-		this.tokens = tokens;
+		Mymcrl2Visitor.tokens = tokens;
 		rewriter = new TokenStreamRewriter(tokens);
 	}
     

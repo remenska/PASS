@@ -6,8 +6,6 @@ import java.util.LinkedList;
 import java.util.Set;
 import java.util.TreeMap;
 
-import javax.swing.BorderFactory;
-
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.ocl.ecore.impl.PrimitiveTypeImpl;
 import org.eclipse.swt.SWT;

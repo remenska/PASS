@@ -1,6 +1,12 @@
 package info.remenska.PASS.monitor.mCRL2;
 
 // Generated from mucalculus.g4 by ANTLR 4.1
+import info.remenska.PASS.monitor.mCRL2.mucalculusParser.ExistentialQuantifierActionFrmContext;
+import info.remenska.PASS.monitor.mCRL2.mucalculusParser.IdListContext;
+import info.remenska.PASS.monitor.mCRL2.mucalculusParser.RegFrmContext;
+import info.remenska.PASS.monitor.mCRL2.mucalculusParser.UniversalQuantifierActionFrmContext;
+import info.remenska.PASS.monitor.mCRL2.mucalculusParser.VarsDeclContext;
+
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -8,26 +14,11 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import info.remenska.PASS.monitor.mCRL2.mucalculusParser.BoxModalityStateFrmContext;
-import info.remenska.PASS.monitor.mCRL2.mucalculusParser.BracketsStateFrmContext;
-import info.remenska.PASS.monitor.mCRL2.mucalculusParser.ConjunctionStateFrmContext;
-import info.remenska.PASS.monitor.mCRL2.mucalculusParser.IdListContext;
-import info.remenska.PASS.monitor.mCRL2.mucalculusParser.NonEmptyIterationRegFormContext;
-import info.remenska.PASS.monitor.mCRL2.mucalculusParser.RegFrmContext;
-import info.remenska.PASS.monitor.mCRL2.mucalculusParser.UniversalQuantifierActionFrmContext;
-import info.remenska.PASS.monitor.mCRL2.mucalculusParser.ExistentialQuantifierActionFrmContext;
-
-import info.remenska.PASS.monitor.mCRL2.mucalculusParser.VarsDeclContext;
-
 import org.antlr.v4.runtime.BufferedTokenStream;
-import org.antlr.v4.runtime.misc.Interval;
-import org.antlr.v4.runtime.misc.NotNull;
-import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
-import org.antlr.v4.runtime.tree.TerminalNode;
-import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.TokenStreamRewriter;
+import org.antlr.v4.runtime.misc.NotNull;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
 public class MyMuCalculusVisitor extends mucalculusBaseVisitor<String> {
 	public static BufferedTokenStream tokens;
@@ -43,8 +34,8 @@ public class MyMuCalculusVisitor extends mucalculusBaseVisitor<String> {
 	public MyMuCalculusVisitor(BufferedTokenStream tokens,
 			Hashtable<String, ArrayList<String>> actionsDict,
 			boolean humanReadable) {
-		this.tokens = tokens;
-		this.actionsDict = actionsDict;
+		MyMuCalculusVisitor.tokens = tokens;
+		MyMuCalculusVisitor.actionsDict = actionsDict;
 		rewriter = new TokenStreamRewriter(tokens);
 		this.humanReadable = humanReadable;
 	}
@@ -212,13 +203,6 @@ public class MyMuCalculusVisitor extends mucalculusBaseVisitor<String> {
 	}
 
 	@Override
-	public String visitIterationRegForm(
-			@NotNull mucalculusParser.IterationRegFormContext ctx) {
-		return visitChildren(ctx);
-
-	}
-
-	@Override
 	public String visitSequentialCompositionRegForm(
 			@NotNull mucalculusParser.SequentialCompositionRegFormContext ctx) {
 		String monProc, monProc1, monProc2;
@@ -226,10 +210,8 @@ public class MyMuCalculusVisitor extends mucalculusBaseVisitor<String> {
 		monProc1 = "Mon_\"" + ctx.regFrm(0).getText() + "\"";
 		monProc2 = "Mon_\"" + ctx.regFrm(1).getText() + "\"";
 
-		Token t1 = (Token) ctx.regFrm(0).start;
 		Token t2 = (Token) ctx.regFrm(0).stop;
 
-		int i = t1.getTokenIndex();
 
 		if (tokens.get(t2.getTokenIndex() + 1).getText().equals(".")) {
 			// transformation
@@ -314,7 +296,6 @@ public class MyMuCalculusVisitor extends mucalculusBaseVisitor<String> {
 		if (ctx.regFrm() instanceof mucalculusParser.IterationRegFormContext) {
 
 			mucalculusParser.RegFrmContext child1 = ctx.regFrm();
-			mucalculusParser.StateFrmContext child2 = ctx.stateFrm();
 
 			mucalculusParser.RegFrmContext child1modified = (RegFrmContext) ctx
 					.regFrm().getChild(0);
@@ -375,11 +356,6 @@ public class MyMuCalculusVisitor extends mucalculusBaseVisitor<String> {
 		return result;
 	}
 
-	@Override
-	public String visitDisjunctionDataExpr(
-			@NotNull mucalculusParser.DisjunctionDataExprContext ctx) {
-		return visitChildren(ctx);
-	}
 
 	@Override
 	public String visitBracketsStateFrm(
@@ -413,12 +389,6 @@ public class MyMuCalculusVisitor extends mucalculusBaseVisitor<String> {
 		return result;
 	}
 
-	@Override
-	public String visitDataValueExpressionActionFrm(
-			@NotNull mucalculusParser.DataValueExpressionActionFrmContext ctx) {
-		return visitChildren(ctx);
-
-	}
 
 	@Override
 	public String visitBracketsActionFrm(
@@ -433,20 +403,6 @@ public class MyMuCalculusVisitor extends mucalculusBaseVisitor<String> {
 
 		String result = new String("" + visit(ctx.actFrm()) + "");
 		return result;
-
-	}
-
-	@Override
-	public String visitActionList(
-			@NotNull mucalculusParser.ActionListContext ctx) {
-		return visitChildren(ctx);
-
-	}
-
-	@Override
-	public String visitMultiAction(
-			@NotNull mucalculusParser.MultiActionContext ctx) {
-		return visitChildren(ctx);
 
 	}
 
@@ -603,12 +559,6 @@ public class MyMuCalculusVisitor extends mucalculusBaseVisitor<String> {
 	}
 
 	@Override
-	public String visitDataValueExpressionStateFrm(
-			@NotNull mucalculusParser.DataValueExpressionStateFrmContext ctx) {
-		return visitChildren(ctx);
-	}
-
-	@Override
 	public String visitFalseStateFrm(
 			@NotNull mucalculusParser.FalseStateFrmContext ctx) {
 		String monProc;
@@ -678,49 +628,6 @@ public class MyMuCalculusVisitor extends mucalculusBaseVisitor<String> {
 		return visitChildren(ctx);
 	}
 
-	public String visitExistentialQuantifierStateFrm(
-			@NotNull mucalculusParser.ExistentialQuantifierStateFrmContext ctx) {
-		return visitChildren(ctx);
-	}
-
-	public String visitNegationStateFrm(
-			@NotNull mucalculusParser.NegationStateFrmContext ctx) {
-		return visitChildren(ctx);
-	}
-
-	
-	@Override
-	public String visitIdentifierDataExpr(
-			@NotNull mucalculusParser.IdentifierDataExprContext ctx) {
-		return visitChildren(ctx);
-	}
-
-	@Override
-	public String visitUniversalQuantifierDataExpr(
-			@NotNull mucalculusParser.UniversalQuantifierDataExprContext ctx) {
-		return visitChildren(ctx);
-	}
-
-	@Override
-	public String visitExistentialQuantifierDataExpr(
-			@NotNull mucalculusParser.ExistentialQuantifierDataExprContext ctx) {
-		return visitChildren(ctx);
-	}
-
-	@Override
-	public String visitDataExprList(
-			@NotNull mucalculusParser.DataExprListContext ctx) {
-		return visitChildren(ctx);
-
-	}
-
-	@Override
-	public String visitVarsDeclList(
-			@NotNull mucalculusParser.VarsDeclListContext ctx) {
-		return visitChildren(ctx);
-
-	}
-
 	@Override
 	public String visitVarsDecl(@NotNull mucalculusParser.VarsDeclContext ctx) {
 		IdListContext idListContext = ctx.idList();
@@ -738,7 +645,6 @@ public class MyMuCalculusVisitor extends mucalculusBaseVisitor<String> {
 		try {
 			throw new NotMonitorableException("MuOperatorContext: The property is not monitorable! Exiting...");
 		} catch (NotMonitorableException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 //			System.exit(1);
 		}
@@ -749,7 +655,6 @@ public class MyMuCalculusVisitor extends mucalculusBaseVisitor<String> {
 		try {
 			throw new NotMonitorableException("NuOperatorContext: The property is not monitorable! Exiting...");
 		} catch (NotMonitorableException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 //			System.exit(1);
 
@@ -761,7 +666,6 @@ public class MyMuCalculusVisitor extends mucalculusBaseVisitor<String> {
 		try {
 			throw new NotMonitorableException("DiamondModalityStateFrmContext: The property is not monitorable! Exiting...");
 		} catch (NotMonitorableException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 //			System.exit(1);
 
@@ -783,7 +687,6 @@ public class MyMuCalculusVisitor extends mucalculusBaseVisitor<String> {
 		try {
 			throw new NotMonitorableException("ImplicationStateFrmContext: The property is not monitorable! Exiting...");
 		} catch (NotMonitorableException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 //			System.exit(1);
 
@@ -795,7 +698,6 @@ public class MyMuCalculusVisitor extends mucalculusBaseVisitor<String> {
 		try {
 			throw new NotMonitorableException("PBESVariableStateFrmContext: The property is not monitorable! Exiting...");
 		} catch (NotMonitorableException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 //			System.exit(1);
 
@@ -807,7 +709,6 @@ public class MyMuCalculusVisitor extends mucalculusBaseVisitor<String> {
 		try {
 			throw new NotMonitorableException("DelayOpStateFrmContext: The property is not monitorable! Exiting...");
 		} catch (NotMonitorableException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 //			System.exit(1);
 
@@ -819,7 +720,6 @@ public class MyMuCalculusVisitor extends mucalculusBaseVisitor<String> {
 			try {
 				throw new NotMonitorableException("YaledOpStateFrmContext: The property is not monitorable! Exiting...");
 			} catch (NotMonitorableException e) {
-				// TODO Auto-generated catch block
 				System.out.println(e.getMessage());
 //				System.exit(1);
 
@@ -832,7 +732,6 @@ public class MyMuCalculusVisitor extends mucalculusBaseVisitor<String> {
 		try {
 			throw new NotMonitorableException("YaledOpStateFrmContext: The property is not monitorable! Exiting...");
 		} catch (NotMonitorableException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 //			System.exit(1);
 
@@ -844,7 +743,6 @@ public class MyMuCalculusVisitor extends mucalculusBaseVisitor<String> {
 		try {
 			throw new NotMonitorableException("YaledOpStateFrmContext: The property is not monitorable! Exiting...");
 		} catch (NotMonitorableException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 //			System.exit(1);
 
@@ -856,7 +754,6 @@ public class MyMuCalculusVisitor extends mucalculusBaseVisitor<String> {
 		try {
 			throw new NotMonitorableException("YaledOpStateFrmContext: The property is not monitorable! Exiting...");
 		} catch (NotMonitorableException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 //			System.exit(1);
 
@@ -868,7 +765,6 @@ public class MyMuCalculusVisitor extends mucalculusBaseVisitor<String> {
 		try {
 			throw new NotMonitorableException("YaledOpStateFrmContext: The property is not monitorable! Exiting...");
 		} catch (NotMonitorableException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 //			System.exit(1);
 
