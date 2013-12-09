@@ -430,6 +430,8 @@ public class QuestionTreePage extends WizardPage {
 //						 UMLSelectExistingElementDialog(getShell(),Collections.   singletonList(UMLElementTypes.ASYNCH_CALL_MESSAGE | UMLElementTypes.SYNCH_CALL_MESSAGE));
 //				 UMLSelectExistingElementDialog(getShell(),Collections.singletonList(UMLElementTypes.CALL_OPERATION_ACTION));
 						 LinkedList<IMessageElementType> fuckYou = new LinkedList<IMessageElementType>();
+						 
+						 
 						 fuckYou.add(UMLElementTypes.ASYNCH_CALL_MESSAGE);
 						 fuckYou.add(UMLElementTypes.SYNCH_CALL_MESSAGE);
 						 UMLSelectExistingElementDialog dialogOperation = new

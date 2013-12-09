@@ -1,13 +1,11 @@
 package info.remenska.PASS.wizards;
 
-import java.awt.Color;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Set;
 import java.util.TreeMap;
 
 import org.eclipse.jface.wizard.WizardPage;
-import org.eclipse.ocl.ecore.impl.PrimitiveTypeImpl;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
@@ -20,7 +18,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;

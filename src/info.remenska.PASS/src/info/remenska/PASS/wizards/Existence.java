@@ -1,7 +1,5 @@
 package info.remenska.PASS.wizards;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.uml2.uml.BehaviorExecutionSpecification;
@@ -29,7 +27,6 @@ import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.ReceiveOperationEvent;
 import org.eclipse.uml2.uml.SendOperationEvent;
 import org.eclipse.uml2.uml.UMLPackage;
-import org.eclipse.uml2.uml.ValueSpecification;
 
 import com.ibm.xtools.modeler.ui.UMLModeler;
 import com.ibm.xtools.umlnotation.UMLDiagramKind;
