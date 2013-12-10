@@ -48,4 +48,4 @@ See also the [mCRL2 site](http://www.mcrl2.org/release/user_manual/index.html) a
 
 #### Q: I don't care about UML. I already have the model and just want to get a formula and a monitor for my property. I don't know how to construct it.
 
-A: OK, we have a solution: use [PASS Web Start](http://www.nikhef.nl/~danielar/PASSWebStart/PASSWebStart.jnlp). It's work in progress. For now it should work with Linux, all you need is javaws.
+A: OK, we have a solution: use [PASS Web Start](http://www.nikhef.nl/~danielar/PASSWebStart/PASSWebStart.jnlp). It's work in progress. For now it should work with Linux, all you need is J2SE1.5+. Please report any feedback to: remenska nospam gmail.com
