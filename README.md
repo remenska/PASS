@@ -45,3 +45,5 @@ Click to view.
 [![mutt dark](https://raw.github.com/remenska/PASS/master/screenshots/thumbnails/GeneratedSequenceDiagram.png)](https://raw.github.com/remenska/PASS/master/screenshots/GeneratedSequenceDiagram.png)
 
 See also the [mCRL2 site](http://www.mcrl2.org/release/user_manual/index.html) and the [LTSmin toolset one](http://fmt.cs.utwente.nl/tools/ltsmin/).
+
+### Q: I don't care about UML, I already have the model and just want to get a formula and a monitor for my property. I don't know how to construct it.
