@@ -44,7 +44,8 @@ Click to view.
 [![mutt dark](https://raw.github.com/remenska/PASS/master/screenshots/thumbnails/Summary.png)](https://raw.github.com/remenska/PASS/master/screenshots/Summary.png)
 [![mutt dark](https://raw.github.com/remenska/PASS/master/screenshots/thumbnails/GeneratedSequenceDiagram.png)](https://raw.github.com/remenska/PASS/master/screenshots/GeneratedSequenceDiagram.png)
 
-See also the [mCRL2 site](http://www.mcrl2.org/release/user_manual/index.html) and the [LTSmin toolset one](http://fmt.cs.utwente.nl/tools/ltsmin/).
+See also the [mCRL2 site](http://www.mcrl2.org/release/user_manual/index.html) and the [LTSmin toolset one](http://fmt.cs.utwente.nl/tools/ltsmin/). Our Property Pattern system
+is [publicly available](www.nikhef.nl/~danielar/Patterns.html) for the curious users.
 
 #### Q: I don't care about UML. I already have the mCRL2 model and just want to get a formula and a monitor for my property.
 
