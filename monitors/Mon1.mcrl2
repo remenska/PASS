@@ -43,7 +43,7 @@ proc Monitor = Mon_"[(nil+(!P)+)][R]false";
 proc Mon_"[(nil+(!P)+)][R]false" = Mon_"(nil+(!P)+)" . Mon_"[R]false"; 
 
 % rule (8) 
-proc Mon_"nil+(!P)+" = Mon_"nil" + Mon_"(!P)+"; 
+proc Mon_"(nil+(!P)+)" = Mon_"nil" + Mon_"(!P)+"; 
 
 % rule (1)
 proc Mon_"nil" = synch_internal ; 
@@ -56,7 +56,7 @@ proc Mon_"(!P)" = (satisfy(R_mon, not(action(P_mon)))) -> R_mon
  + (satisfy(Q_mon, not(action(P_mon)))) -> Q_mon
  + (satisfy(P_mon, not(action(P_mon)))) -> P_mon;
 
-% rule (9)
+% rule (5)
 proc Mon_"[R]false" = Mon_"R" . Mon_"false"; 
 
 % rule (6)
