@@ -12,7 +12,7 @@ the steep learning curve associated to the languages—typically temporal logics
 used for specifying the application-specific properties to be checked. To bring the
 process of correctly eliciting functional properties closer to software engineers,
 we introduce PASS, a Property ASSistant wizard as part of a UML-based front-end to the mCRL2 toolset. PASS instantiates pattern templates using three notations: a natural language summary, a μ-calculus formula and a UML sequence diagram depicting the desired behavior. Most approaches to date have focused on LTL, which is a state-based formalism. Conversely, μ-calculus is event-based, making it a good match for sequence diagrams, where communication between components is depicted. 
-Last but not least, we automatically generate monitors based on a mu-calculus formula, which can be used for property-driven on-the-fly model
+Last but not least, we automatically generate monitors based on a μ-calculus formula, which can be used for property-driven on-the-fly model
 checking using the standard state-space exploration facilities of mCRL2. 
 
 
@@ -44,7 +44,7 @@ Click to view.
 [![mutt dark](https://raw.github.com/remenska/PASS/master/screenshots/thumbnails/Summary.png)](https://raw.github.com/remenska/PASS/master/screenshots/Summary.png)
 [![mutt dark](https://raw.github.com/remenska/PASS/master/screenshots/thumbnails/GeneratedSequenceDiagram.png)](https://raw.github.com/remenska/PASS/master/screenshots/GeneratedSequenceDiagram.png)
 
-See also the [mCRL2 site](http://www.mcrl2.org/release/user_manual/index.html) and the [LTSmin toolset one](http://fmt.cs.utwente.nl/tools/ltsmin/). Our Property Pattern templates and extensions for mu-calculus are [publicly available](http://www.nikhef.nl/~danielar/Patterns.html) for the curious users.
+See also the [mCRL2 site](http://www.mcrl2.org/release/user_manual/index.html) and the [LTSmin toolset one](http://fmt.cs.utwente.nl/tools/ltsmin/). Our Property Pattern templates and extensions for μ-calculus are [publicly available](http://www.nikhef.nl/~danielar/Patterns.html) for the curious users.
 
 #### Q: I don't care about UML. I already have the mCRL2 model and just want to get a formula and a monitor for my property.
 
