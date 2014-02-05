@@ -29,38 +29,43 @@ map satisfy: Action # ActionFormula -> Bool;
 var c1,c2:Action;
 f,g:ActionFormula;
 eqn
-	 satisfy(c1,action(c2)) = (c1 == c2) ;
-	 satisfy(c1,and(f,g)) = satisfy(c1,f) && satisfy(c1,g);
-	 satisfy(c1,not(f)) = !satisfy(c1,f);
-	 satisfy(c1,or(f,g)) = satisfy(c1,f) || satisfy(c1,g);
-	 satisfy(c1,True) = true;
-	 satisfy(c1,False) = false;
+	 satisfy(c1,action(c2)) = (c1 == c2) ;  % rule (10)
+	 satisfy(c1,and(f,g)) = satisfy(c1,f) && satisfy(c1,g); % rule (13)
+	 satisfy(c1,not(f)) = !satisfy(c1,f); % rule (12)
+	 satisfy(c1,or(f,g)) = satisfy(c1,f) || satisfy(c1,g); % rule (14)
+	 satisfy(c1,True) = true; % rule (11)
+	 satisfy(c1,False) = false; % rule (11)
 
-proc Monitor = Mon_"[(nil+(!P)+)][R]false"; 
+% rule (1)
+proc Monitor = Mon_"[(nil+(!P)+)][R]false";  
 
-proc Mon_"[(nil+(!P)+)][R]false" = Mon_"(nil+(!P)+)" . Mon_"[R]false";
+% rule (5)
+proc Mon_"[(nil+(!P)+)][R]false" = Mon_"(nil+(!P)+)" . Mon_"[R]false"; 
 
-proc Mon_"(nil+(!P)+)" = Mon_"nil+(!P)+";
+% rule (8) 
+proc Mon_"nil+(!P)+" = Mon_"nil" + Mon_"(!P)+"; 
 
-proc Mon_"nil+(!P)+" = Mon_"nil" + Mon_"(!P)+";
+% rule (1)
+proc Mon_"nil" = synch_internal ; 
 
-proc Mon_"nil" = synch_internal ;
+% rule (9)
+proc Mon_"(!P)+" = Mon_"(!P)". Mon_"(!P)+"; 
 
-proc Mon_"(!P)+" = Mon_"(!P)". Mon_"(!P)+";
-
-proc Mon_"(!P)" = Mon_"!P";
-
-proc Mon_"!P" = (satisfy(R_mon, not(action(P_mon)))) -> R_mon
+% rule (6)
+proc Mon_"(!P)" = (satisfy(R_mon, not(action(P_mon)))) -> R_mon  
  + (satisfy(Q_mon, not(action(P_mon)))) -> Q_mon
  + (satisfy(P_mon, not(action(P_mon)))) -> P_mon;
 
-proc Mon_"[R]false" = Mon_"R" . Mon_"false";
+% rule (9)
+proc Mon_"[R]false" = Mon_"R" . Mon_"false"; 
 
-proc Mon_"R" = (satisfy(R_mon, action(R_mon))) -> R_mon
+% rule (6)
+proc Mon_"R" = (satisfy(R_mon, action(R_mon))) -> R_mon 
  + (satisfy(Q_mon, action(R_mon))) -> Q_mon
  + (satisfy(P_mon, action(R_mon))) -> P_mon;
 
-proc Mon_"false" = error;
+% rule (2)
+proc Mon_"false" = error; 
 
 init hide ({synch_internal}, allow({error, synch_internal,R_found,Q_found,P_found}, 
  comm({	 R | R_mon -> R_found,
