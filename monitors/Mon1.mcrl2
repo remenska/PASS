@@ -1,0 +1,69 @@
+act send,read;
+
+proc Process = send.read;
+
+
+%====== MONITOR PART GENERATED ==============
+% Original formula:[(! P)*. R] false
+
+% ============================
+% Modified formula:[(nil  + (! P)+)][R]false 
+% ============================
+act error, synch_internal ;
+sort Action = struct read_mon
+ | send_mon;
+
+act read_mon,read_found;
+act send_mon,send_found;
+
+sort ActionFormula = struct action(act1:Action)
+| and(phi1:ActionFormula,phi2:ActionFormula) 
+| or(phi1:ActionFormula,phi2:ActionFormula)  
+| not(ActionFormula) 
+| True 
+| False ; 
+
+map satisfy: Action # ActionFormula -> Bool;
+var c1,c2:Action;
+f,g:ActionFormula;
+eqn
+	 satisfy(c1,action(c2)) = (c1 == c2) ;	 
+	 satisfy(c1,and(f,g)) = satisfy(c1,f) && satisfy(c1,g);
+	 satisfy(c1,not(f)) = !satisfy(c1,f);
+	 satisfy(c1,or(f,g)) = satisfy(c1,f) || satisfy(c1,g);
+	 satisfy(c1,True) = true;
+	 satisfy(c1,False) = false;
+
+proc Monitor = Mon_"[(nil+(!P)+)][R]false"; 
+
+proc Mon_"[(nil+(!P)+)][R]false" = Mon_"(nil+(!P)+)" . Mon_"[R]false";
+
+proc Mon_"(nil+(!P)+)" = Mon_"nil+(!P)+";
+
+proc Mon_"nil+(!P)+" = Mon_"nil" + Mon_"(!P)+";
+
+proc Mon_"nil" = synch_internal ;
+
+proc Mon_"(!P)+" = Mon_"(!P)". Mon_"(!P)+";
+
+proc Mon_"(!P)" = Mon_"!P";
+
+proc Mon_"!P" = (satisfy(read_mon, not(action(P_mon)))) -> read_mon
+ + (satisfy(send_mon, not(action(P_mon)))) -> send_mon
+
+;
+
+proc Mon_"[R]false" = Mon_"R" . Mon_"false";
+
+proc Mon_"R" = (satisfy(read_mon, action(R_mon))) -> read_mon
+ + (satisfy(send_mon, action(R_mon))) -> send_mon
+
+;
+
+proc Mon_"false" = error;
+
+init hide ({synch_internal}, allow({error, synch_internal,read_found,send_found}, 
+ comm({	 read | read_mon -> read_found,
+	 send | send_mon -> send_found
+},
+ Monitor  || Process)));
