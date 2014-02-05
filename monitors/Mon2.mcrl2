@@ -4,10 +4,11 @@ proc Process = send.read;
 
 
 %====== MONITOR PART GENERATED ==============
-% Original formula:[(! P)*. R] false
+% Original formula:[(! R)*. P. (! R)*. R] false
+
 
 % ============================
-% Modified formula:[(nil  + (! P)+)][R]false 
+% Modified formula:[(nil  + (! R)+)][P][(nil  + (! R)+)][R]false 
 % ============================
 act error, synch_internal ;
 sort Action = struct read_mon
@@ -34,22 +35,42 @@ eqn
 	 satisfy(c1,True) = true;
 	 satisfy(c1,False) = false;
 
-proc Monitor = Mon_"[(nil+(!P)+)][R]false"; 
+proc Monitor = Mon_"[(nil+(!R)+)][P][(nil+(!R)+)][R]false"; 
 
-proc Mon_"[(nil+(!P)+)][R]false" = Mon_"(nil+(!P)+)" . Mon_"[R]false";
+proc Mon_"[(nil+(!R)+)][P][(nil+(!R)+)][R]false" = Mon_"(nil+(!R)+)" . Mon_"[P][(nil+(!R)+)][R]false";
 
-proc Mon_"(nil+(!P)+)" = Mon_"nil+(!P)+";
+proc Mon_"(nil+(!R)+)" = Mon_"nil+(!R)+";
 
-proc Mon_"nil+(!P)+" = Mon_"nil" + Mon_"(!P)+";
+proc Mon_"nil+(!R)+" = Mon_"nil" + Mon_"(!R)+";
 
 proc Mon_"nil" = synch_internal ;
 
-proc Mon_"(!P)+" = Mon_"(!P)". Mon_"(!P)+";
+proc Mon_"(!R)+" = Mon_"(!R)". Mon_"(!R)+";
 
-proc Mon_"(!P)" = Mon_"!P";
+proc Mon_"(!R)" = Mon_"!R";
 
-proc Mon_"!P" = (satisfy(read_mon, not(action(P_mon)))) -> read_mon
- + (satisfy(send_mon, not(action(P_mon)))) -> send_mon;
+proc Mon_"!R" = (satisfy(read_mon, not(action(R_mon)))) -> read_mon
+ + (satisfy(send_mon, not(action(R_mon)))) -> send_mon ;
+
+proc Mon_"[P][(nil+(!R)+)][R]false" = Mon_"P" . Mon_"[(nil+(!R)+)][R]false";
+
+proc Mon_"P" = (satisfy(read_mon, action(P_mon))) -> read_mon
+ + (satisfy(send_mon, action(P_mon))) -> send_mon;
+
+proc Mon_"[(nil+(!R)+)][R]false" = Mon_"(nil+(!R)+)" . Mon_"[R]false";
+
+proc Mon_"(nil+(!R)+)" = Mon_"nil+(!R)+";
+
+proc Mon_"nil+(!R)+" = Mon_"nil" + Mon_"(!R)+";
+
+proc Mon_"nil" = synch_internal ;
+
+proc Mon_"(!R)+" = Mon_"(!R)". Mon_"(!R)+";
+
+proc Mon_"(!R)" = Mon_"!R";
+
+proc Mon_"!R" = (satisfy(read_mon, not(action(R_mon)))) -> read_mon
+ + (satisfy(send_mon, not(action(R_mon)))) -> send_mon;
 
 proc Mon_"[R]false" = Mon_"R" . Mon_"false";
 
