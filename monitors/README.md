@@ -1,1 +1,3 @@
-Test
+This repository contains monitors generated for some examples of mu-calculus formulas. Note that the names of the processes are human-readable on purpose (in quotations), to aid in understanding how the transformation rules are applied. As such, mCRL2 will not directly accept these models for linearization.
+
+In practise, in PASS the process names are encoded such that the models can be linearized directly. 
