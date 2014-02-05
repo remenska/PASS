@@ -48,8 +48,7 @@ proc Mon_"nil" = synch_internal ;
 proc Mon_"true+" = Mon_"true". Mon_"true+";
 
 proc Mon_"true" = (satisfy(read_mon, True)) -> read_mon
- + (satisfy(send_mon, True)) -> send_mon
-;
+ + (satisfy(send_mon, True)) -> send_mon;
 
 proc Mon_"[Q][(nil+(!R)+)][P][(nil+(!R)+)][R]false" = Mon_"Q" . Mon_"[(nil+(!R)+)][P][(nil+(!R)+)][R]false";
 
