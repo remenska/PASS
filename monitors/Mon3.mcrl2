@@ -1,6 +1,6 @@
-act send,read;
+act P, Q, R;
 
-proc Process = send.read;
+proc Process = P.Q.R;
 
 
 %====== MONITOR PART GENERATED ==============
@@ -11,11 +11,13 @@ proc Process = send.read;
 % Modified formula:[(nil  + true+)][Q][(nil  + (! R)+)][P][(nil  + (! R)+)][R]false 
 % ============================
 act error, synch_internal ;
-sort Action = struct read_mon
- | send_mon;
+sort Action = struct R_mon
+ | Q_mon
+ | P_mon;
 
-act read_mon,read_found;
-act send_mon,send_found;
+act R_mon,R_found;
+act Q_mon,Q_found;
+act P_mon,P_found;
 
 sort ActionFormula = struct action(act1:Action)
 | and(phi1:ActionFormula,phi2:ActionFormula) 
@@ -28,7 +30,7 @@ map satisfy: Action # ActionFormula -> Bool;
 var c1,c2:Action;
 f,g:ActionFormula;
 eqn
-	 satisfy(c1,action(c2)) = (c1 == c2) ;	 
+	 satisfy(c1,action(c2)) = (c1 == c2) ;
 	 satisfy(c1,and(f,g)) = satisfy(c1,f) && satisfy(c1,g);
 	 satisfy(c1,not(f)) = !satisfy(c1,f);
 	 satisfy(c1,or(f,g)) = satisfy(c1,f) || satisfy(c1,g);
@@ -47,13 +49,15 @@ proc Mon_"nil" = synch_internal ;
 
 proc Mon_"true+" = Mon_"true". Mon_"true+";
 
-proc Mon_"true" = (satisfy(read_mon, True)) -> read_mon
- + (satisfy(send_mon, True)) -> send_mon;
+proc Mon_"true" = (satisfy(R_mon, True)) -> R_mon
+ + (satisfy(Q_mon, True)) -> Q_mon
+ + (satisfy(P_mon, True)) -> P_mon;
 
 proc Mon_"[Q][(nil+(!R)+)][P][(nil+(!R)+)][R]false" = Mon_"Q" . Mon_"[(nil+(!R)+)][P][(nil+(!R)+)][R]false";
 
-proc Mon_"Q" = (satisfy(read_mon, action(Q_mon))) -> read_mon
- + (satisfy(send_mon, action(Q_mon))) -> send_mon;
+proc Mon_"Q" = (satisfy(R_mon, action(Q_mon))) -> R_mon
+ + (satisfy(Q_mon, action(Q_mon))) -> Q_mon
+ + (satisfy(P_mon, action(Q_mon))) -> P_mon;
 
 proc Mon_"[(nil+(!R)+)][P][(nil+(!R)+)][R]false" = Mon_"(nil+(!R)+)" . Mon_"[P][(nil+(!R)+)][R]false";
 
@@ -67,13 +71,15 @@ proc Mon_"(!R)+" = Mon_"(!R)". Mon_"(!R)+";
 
 proc Mon_"(!R)" = Mon_"!R";
 
-proc Mon_"!R" = (satisfy(read_mon, not(action(R_mon)))) -> read_mon
- + (satisfy(send_mon, not(action(R_mon)))) -> send_mon;
+proc Mon_"!R" = (satisfy(R_mon, not(action(R_mon)))) -> R_mon
+ + (satisfy(Q_mon, not(action(R_mon)))) -> Q_mon
+ + (satisfy(P_mon, not(action(R_mon)))) -> P_mon;
 
 proc Mon_"[P][(nil+(!R)+)][R]false" = Mon_"P" . Mon_"[(nil+(!R)+)][R]false";
 
-proc Mon_"P" = (satisfy(read_mon, action(P_mon))) -> read_mon
- + (satisfy(send_mon, action(P_mon))) -> send_mon;
+proc Mon_"P" = (satisfy(R_mon, action(P_mon))) -> R_mon
+ + (satisfy(Q_mon, action(P_mon))) -> Q_mon
+ + (satisfy(P_mon, action(P_mon))) -> P_mon;
 
 proc Mon_"[(nil+(!R)+)][R]false" = Mon_"(nil+(!R)+)" . Mon_"[R]false";
 
@@ -87,18 +93,21 @@ proc Mon_"(!R)+" = Mon_"(!R)". Mon_"(!R)+";
 
 proc Mon_"(!R)" = Mon_"!R";
 
-proc Mon_"!R" = (satisfy(read_mon, not(action(R_mon)))) -> read_mon
- + (satisfy(send_mon, not(action(R_mon)))) -> send_mon;
+proc Mon_"!R" = (satisfy(R_mon, not(action(R_mon)))) -> R_mon
+ + (satisfy(Q_mon, not(action(R_mon)))) -> Q_mon
+ + (satisfy(P_mon, not(action(R_mon)))) -> P_mon;
 
 proc Mon_"[R]false" = Mon_"R" . Mon_"false";
 
-proc Mon_"R" = (satisfy(read_mon, action(R_mon))) -> read_mon
- + (satisfy(send_mon, action(R_mon))) -> send_mon;
+proc Mon_"R" = (satisfy(R_mon, action(R_mon))) -> R_mon
+ + (satisfy(Q_mon, action(R_mon))) -> Q_mon
+ + (satisfy(P_mon, action(R_mon))) -> P_mon;
 
 proc Mon_"false" = error;
 
-init hide ({synch_internal}, allow({error, synch_internal,read_found,send_found}, 
- comm({	 read | read_mon -> read_found,
-	 send | send_mon -> send_found
+init hide ({synch_internal}, allow({error, synch_internal,R_found,Q_found,P_found}, 
+ comm({	 R | R_mon -> R_found,
+	 Q | Q_mon -> Q_found,
+	 P | P_mon -> P_found
 },
  Monitor  || Process)));
